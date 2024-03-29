@@ -28,4 +28,25 @@ public class Etudiant {
     @ManyToMany(mappedBy = "etudiantList")
     private List<Cours> coursList;
 
+    public Etudiant(Long id, String nom, String prenom){
+        this.id=id;
+        this.nom=nom;
+        this.prenom=prenom;
+    }
+
+    public Etudiant( String nom, String prenom){
+        
+        this.nom=nom;
+        this.prenom=prenom;
+    }
+
+    @Override
+    public String toString(){
+        return "Etudiant{"+
+                "id=" + id + 
+                ",Nom='" + nom + '\''+
+                ",Prenom='" + prenom + '\''+
+                '}';
+    }
+
 }

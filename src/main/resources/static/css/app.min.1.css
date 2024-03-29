@@ -4427,8 +4427,8 @@ fieldset[disabled] .btn-boris.focus,
 .btn-boris.disabled:active,
 .btn-boris[disabled]:active,
 fieldset[disabled] .btn-boris:active {
-  background-color: #102C0B
-  border-color: #0d8aee;
+  background-color: #102C0B;
+  border-color:#0d8aee;
 }
 
 .btn-boris .badge {
@@ -9838,7 +9838,7 @@ a {
 }
 
 html {
-  overflow-x: hidden\0/;
+  overflow-x: hidden\0;
   -ms-overflow-style: none;
 }
 
@@ -9939,7 +9939,7 @@ body #content {
 }
 
 #header {
-  background: #4285F4;
+  background: #d73719d4;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
   height: 65px;
   position: fixed;
@@ -10499,8 +10499,8 @@ body #content {
   height: 129px;
   margin-bottom: 5px;
   width: 100%;
-  background: url(../images/profile-menu.png) no-repeat left top;
-  background-size: 100%;
+  background: url(../images/mach.png) no-repeat left top;
+  background-size: 50%;
 }
 
 .profile-menu > a .profile-pic {
@@ -14226,7 +14226,7 @@ html:not(.ie9) .select.fg-line:before {
 }
 
 #seem{
-    margin-top = 25%;
+    margin-top : 25%;
 }
 .toggle-switch[data-ts-color="pink"] input:not(:disabled):checked + .ts-helper:before {
   background: #e91e63;

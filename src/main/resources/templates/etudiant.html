@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gestion Pharmacie</title>
+    <title>Gestion Eudiant ESGIS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link th:href="@{/css/material-design-iconic-font.min.css}" rel="stylesheet">
     <link th:href="@{/css/app.min.1.css}" rel="stylesheet">
@@ -28,7 +28,7 @@
         </li>
 
         <li class="logo hidden-xs">
-            <a><b>Application Gestion de Pharmacie </b></a>
+            <a><b>Application Gestion d'Etudiant </b></a>
         </li>
 
         <li class="pull-right">
@@ -87,15 +87,15 @@
                     <a href="/home"><i class="zmdi zmdi-home"></i> Bienvenue</a>
                 </li>
                 <li>
-                    <a href="/validation"><i class="zmdi zmdi-file-text"></i>Gestion des Médicaments</a>
+                    <a href="/coursList"><i class="zmdi zmdi-file-text"></i>Gestion des Cours</a>
                 </li>
                 <li>
-                    <a href="/pharmacie"><i class="zmdi zmdi-file-text"></i>Gestion des Pharmaciens</a>
-                </li>
-                <li>
-                    <a href="/medecinList"><i class="zmdi zmdi-file-text"></i>Gestion des Medecins</a>
+                    <a href="/etudiantList"><i class="zmdi zmdi-file-text"></i>Gestion des Etudiants</a>
                 </li>
 
+                <li>
+                    <a href="/inscriptionList"><i class="zmdi zmdi-file-text"></i>Gestion des Inscrits</a>
+                </li>
             </ul>
 
         </div>
@@ -105,20 +105,24 @@
     <div class="lds-ring hide"><div></div><div></div><div></div><div></div></div>
     <div class="container">
         <div th:if="${save_success}" class="alert alert-success">
-            <h3 align="center" style="color: #8b211e">Saisie Validée avec succès</h3>
+            <h3 align="center" style="color: #161515">Saisie Validée avec succès</h3>
+        </div>
+
+        <div th:if="${success_update}" class="alert alert-success">
+            <h3 align="center" style="color: #161515">Mise à jours reussie</h3>
         </div>
 
         <div th:if="${save_error}" class="alert alert-danger">
-            <h3 align="center" style="color: #8b211e">Echec saisie </h3>
+            <h3 align="center" style="color: #131212">Echec saisie </h3>
         </div>
 
         <div th:if="${delete_success}" class="alert alert-danger">
-            <h3 align="center" style="color: #8b211e">Suppression Effectué avec succès </h3>
+            <h3 align="center" style="color: #0c0c0c">Suppression Effectué avec succès </h3>
         </div>
 
         <div class="card">
             <div class="card-header bgm-bluegray" align="center" height="300px" width="100">
-                <h2>Interface de Gestions des Medecins</h2>
+                <h2>Interface de Gestions des Etudiants</h2>
 
             </div>
         </div>
@@ -133,12 +137,12 @@
                 <!--                <div class="row">-->
                 <div class="row">
                     <div class="row col-sm-3">
-                        <input type="text" name="nomM" class="form-control input-sm fileds" id="nomM" placeholder="Saisir nom medecin" >
+                        <input type="text" name="nom" class="form-control input-sm fileds" id="nom" placeholder="Saisir nom etudiant" >
                     </div>
                     <div class="row col-sm-2">
                     </div>
                     <div class="row col-sm-3">
-                        <input type="text" name="matricule" class="form-control input-sm fileds" id="matricule" placeholder="Saisir le matricule du medecin" >
+                        <input type="text" name="prenom" class="form-control input-sm fileds" id="prenom" placeholder="Saisir le prenom de l'etudiant" >
                     </div>
 
                 </div>
@@ -160,8 +164,8 @@
                         <thead>
                         <tr >
                             <th data-column-id="id" data-visible="false">ID</th>
-                            <th data-column-id="nom"> nom</th>
-                            <th data-column-id="matricule" ><b>Matricule</b></th>
+                            <th data-column-id="nom"> Nom</th>
+                            <th data-column-id="prenom" ><b>Prenom</b></th>
 
 <!--                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
 
@@ -170,10 +174,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="det: ${listMedecin}">
+                        <tr th:each="det: ${listEtudiant}">
                             <td th:text="${det.id}"></td>
-                            <td th:text="${det.nomM}"></td>
-                            <td th:text="${det.matricule}"></td>
+                            <td th:text="${det.nom}"></td>
+                            <td th:text="${det.prenom}"></td>
 
 
                         </tr>
@@ -202,12 +206,12 @@
                         </div>
                         <div class="row">
                             <div class="row col-sm-3">
-                                <input type="text" name="medecinupdate" class="form-control input-sm fileds" id="medecinupdate" placeholder="Saisir le medecin" >
+                                <input type="text" name="nom_update" class="form-control input-sm fileds" id="nom_update" placeholder="Saisir l'etudiant" >
                             </div>
                             <div class="row col-sm-2">
                             </div>
                             <div class="row col-sm-3">
-                                <input type="text" name="matriculeupdate" class="form-control input-sm fileds" id="matriculeupdate" placeholder="Saisir matricule" >
+                                <input type="text" name="prenom_update" class="form-control input-sm fileds" id="prenom_update" placeholder="Saisir prenom" >
                             </div>
                         </div>
                         <div class="row">
@@ -285,7 +289,7 @@
     $('#sauve').click(function() {
 
             //alert("ok");
-            window.location.href='/insertMedecin?matricule='+$('#matricule').val() + '&nomM='+$('#nomM').val();
+            window.location.href='/insertEtudiant?prenom='+$('#prenom').val() + '&nom='+$('#nom').val();
 
 
         }
@@ -293,13 +297,13 @@
 
 
     $('#yesEdit').click(function () {
-        window.location.href='/updateMedecin?matricule='+$('#matriculeupdate').val() + '&nom='+$('#medecinupdate').val() + '&id='+$('#coded').val();
+        window.location.href='/updateEtudiant?prenom='+$('#prenom_update').val() + '&nom='+$('#nom_update').val() + '&id='+$('#coded').val();
 
 
     });
 
     $('#yesDelete').click(function () {
-        window.location.href='/deleteMedecin?id='+$('#delcoded').val();
+        window.location.href='/deleteEtudiant?id='+$('#delcoded').val();
 
 
     });
@@ -317,7 +321,7 @@
         formatters: {
             "commands": function(column, row) {
                 return "<button type=\"button\" title='Validation Détails' class=\"btn bgm-orange btn-icon edit\"  data-toggle=\"modal\" data-target=\"#confirmEdit\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-check\" ></span></button> " +
-                    "<button type=\"button\" title='Suppression Medecin' class=\"btn bgm-red btn-icon delete\" data-toggle=\"modal\" data-target=\"#confirmDelete\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-shopping-basket\"></span></button>";
+                    "<button type=\"button\" title='Suppression Etudiant' class=\"btn bgm-red btn-icon delete\" data-toggle=\"modal\" data-target=\"#confirmDelete\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-shopping-basket\"></span></button>";
             }
         }
     }).on("loaded.rs.jquery.bootgrid", function () {

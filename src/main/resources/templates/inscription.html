@@ -87,17 +87,16 @@
                     <a href="/home"><i class="zmdi zmdi-home"></i> Bienvenue</a>
                 </li>
                 <li>
-                    <a href="/validation"><i class="zmdi zmdi-file-text"></i>Gestion des Médicaments</a>
+                    <a href="/coursList"><i class="zmdi zmdi-file-text"></i>Gestion des Cours</a>
                 </li>
                 <li>
-                    <a href="/pharmacie"><i class="zmdi zmdi-file-text"></i>Gestion des Pharmaciens</a>
-                </li>
-                <li>
-                    <a href="/medecinList"><i class="zmdi zmdi-file-text"></i>Gestion des Medecins</a>
+                    <a href="/etudiantList"><i class="zmdi zmdi-file-text"></i>Gestion des Etudiants</a>
                 </li>
 
+                <li>
+                    <a href="/inscriptionList"><i class="zmdi zmdi-file-text"></i>Gestion des Inscrits</a>
+                </li>
             </ul>
-
         </div>
     </aside>
 </section>
@@ -131,31 +130,19 @@
         <div class="card">
             <div class="card-body card-padding">
                 <div class="body">
-                    <form id="form_advanced_valid" method="post" th:action="@{/insertConsult}" th:object="${insert}" enctype="multipart/form-data" >
+                    <form id="form_advanced_valid" method="post" th:action="@{/insertInscrip}" th:object="${insert}" enctype="multipart/form-data" >
                 <div class="row">
                     <div class="row col-sm-3">
                         <div class="form-group form-float" >
                             <div class="form-line" >
-                                <select id="nomMedecin" data-live-search="true" name="nomMedecin" class="form-control show-tick" required="required" >
-                                    <option th:each="med:${listMedecin}" th:value="${med.id}" th:text="${med.nomM}" th:selected="${med.id==1}" >
+                                <select id="nomEtudiant" data-live-search="true" name="nomEtudiant" class="form-control show-tick" required="required" >
+                                    <option th:each="pat:${listEtudiant}" th:value="${pat.id}" th:text="${pat.nom}" th:selected="${pat.id==1}" >
                                     </option>
                                 </select>
                             </div>
                             <div class="form-line" >
-                                <select id="nomPatient" data-live-search="true" name="nomPatient" class="form-control show-tick" required="required" >
-                                    <option th:each="pat:${listPatient}" th:value="${pat.id}" th:text="${pat.nomP}" th:selected="${pat.id==1}" >
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-line" >
-                                <select id="medicamentList" multiple="multiple" data-live-search="true" name="medicamentList" class="form-control show-tick" required="required"  >
-                                    <option th:each="pat:${listmedicament}" th:value="${pat.id}" th:text="${pat.libelle}" th:selected="${pat.id==1}" >
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-line" >
-                                <select id="typeConsult" data-live-search="true" name="typeConsult" class="form-control show-tick" required="required" >
-                                    <option th:each="type:${listtypeConsultation}" th:value="${type}" th:text="${type}" th:selected="${type==1}" >
+                                <select id="coursList" multiple="multiple" data-live-search="true" name="coursList" class="form-control show-tick" required="required"  >
+                                    <option th:each="pat:${listCours}" th:value="${pat.id}" th:text="${pat.nomC}" th:selected="${pat.id==1}" >
                                     </option>
                                 </select>
                             </div>
@@ -187,11 +174,10 @@
                         <thead>
                         <tr>
                             <th data-column-id="id" data-visible="false">ID</th>
-                            <th data-column-id="nomM"> nom médecin</th>
-                            <th data-column-id="nomP"> nom patient</th>
-                            <th data-column-id="typeP"> type consultation</th>
-                            <th data-column-id="dateC"> date consultation</th>
-                            <th data-column-id="med"> medicament</th>
+                            <th data-column-id="nom"> nom Etudiant</th>
+                            <th data-column-id="nom"> nom Etudiant</th>
+                            <th data-column-id="nomC"> Cours</th>
+                            <th data-column-id="description"> Description cours</th>
 
 
 <!--                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
@@ -201,13 +187,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="det: ${listconsultation}">
+                        <tr th:each="det: ${listInscription}">
                             <td th:text="${det.id}"></td>
-                            <td th:text="${det.nomMedecin}"></td>
-                            <td th:text="${det.nomPatient}">
-                            <td th:text="${det.typeConsult}">
-                            <td th:text="${det.date}">
-                            <td th:text="${det.medicamentList}">
+                            <td th:text="${det.nom}"></td>
+                            <td th:text="${det.prenom}">
+                            <td th:text="${det.coursList}">
                         </tr>
                         </tbody>
                     </table>
@@ -231,35 +215,26 @@
                                 <h4 style="color : red"><b>Cette action va éditer les informations.</b></h4>
                             </div>
                         </div>
-                        <form id="form_advanced_valid1" method="post" th:action="@{/updateConsult}" th:object="${insert}" enctype="multipart/form-data" >
+                        <form id="form_advanced_valid1" method="post" th:action="@{/updateInscrip}" th:object="${insert}" enctype="multipart/form-data" >
                             <input type="number" id="coded" name="coded" hidden="hidden" />
                             <div class="row">
                                 <div class="row col-sm-3">
                                     <div class="form-group form-float" >
                                         <div class="form-line" >
-                                            <select id="nomMedecin1" data-live-search="true" name="nomMedecin1" class="form-control show-tick" required="required" >
-                                                <option th:each="med:${listMedecin}" th:value="${med.id}" th:text="${med.nomM}" th:selected="${med.id==1}" >
+                                            <select id="nom_update" data-live-search="true" name="nom_update" class="form-control show-tick" required="required" >
+                                                <option th:each="med:${listEtudiant}" th:value="${med.id}" th:text="${med.nom}" th:selected="${med.id==1}" >
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="form-line" >
-                                            <select id="nomPatient1" data-live-search="true" name="nomPatient1" class="form-control show-tick" required="required" >
-                                                <option th:each="pat:${listPatient}" th:value="${pat.id}" th:text="${pat.nomP}" th:selected="${pat.id==1}" >
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-line" >
-                                            <select id="typeConsult1" data-live-search="true" name="typeConsult1" class="form-control show-tick" required="required" >
-                                                <option th:each="type:${listtypeConsultation}" th:value="${type}" th:text="${type}" th:selected="${type==1}" >
+                                            <select id="nomC_update" data-live-search="true" name="nomC_update" class="form-control show-tick" required="required" >
+                                                <option th:each="pat:${listCours}" th:value="${pat.id}" th:text="${pat.nomC_update}" th:selected="${pat.id==1}" >
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row col-sm-2">
-                                </div>
-                                <div class="row col-sm-3">
-                                    <input type="text" name="typeConsultaion" class="form-control input-sm fileds" id="typeConsultaion1" placeholder="Saisir le type de consultation" >
                                 </div>
 
                             </div>
@@ -341,7 +316,7 @@
     $('#sauve').click(function() {
 
             //alert("ok");
-            window.location.href='/insertMedecin?matricule='+$('#matricule').val() + '&nomM='+$('#nomM').val();
+            window.location.href='/insertEtudiant?prenom='+$('#prenom').val() + '&nom='+$('#nom').val();
 
 
         }
@@ -349,13 +324,13 @@
 
 
     $('#yesEdit').click(function () {
-        window.location.href='/updateMedecin?matricule='+$('#matriculeupdate').val() + '&nom='+$('#medecinupdate').val() + '&id='+$('#coded').val();
+        window.location.href='/updateEtudiant?prenom='+$('#prenom_update').val() + '&nom='+$('#nom_update').val() + '&id='+$('#coded').val();
 
 
     });
 
     $('#yesDelete').click(function () {
-        window.location.href='/deleteConsult?id='+$('#delcoded').val();
+        window.location.href='/deleteInscrip?id='+$('#delcoded').val();
 
 
     });
