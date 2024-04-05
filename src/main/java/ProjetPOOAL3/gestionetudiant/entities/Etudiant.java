@@ -9,13 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 @Data
-@ToString
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Etudiant {
     @Id
@@ -27,6 +22,10 @@ public class Etudiant {
     // Chaque étudiant a plusieurs cours
     @ManyToMany(mappedBy = "etudiantList")
     private List<Cours> coursList;
+    // Constructeur sans arguments
+
+    public Etudiant() {
+    }
 
     public Etudiant(Long id, String nom, String prenom){
         this.id=id;
@@ -40,10 +39,21 @@ public class Etudiant {
         this.prenom=prenom;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom){
+        this.nom=nom;
+    }
+    public void setPrenom(String prenom)
+{
+    this.prenom=prenom;
+}
     @Override
     public String toString(){
         return "Etudiant{"+
-                "id=" + id + 
+                "id=" + id +
                 ",Nom='" + nom + '\''+
                 ",Prenom='" + prenom + '\''+
                 '}';

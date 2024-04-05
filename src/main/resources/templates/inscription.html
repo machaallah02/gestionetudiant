@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gestion Pharmacie</title>
+    <title>Gestion inscription</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link th:href="@{/css/material-design-iconic-font.min.css}" rel="stylesheet">
     <link th:href="@{/css/app.min.1.css}" rel="stylesheet">
@@ -28,7 +28,7 @@
         </li>
 
         <li class="logo hidden-xs">
-            <a><b>Application Gestion de Pharmacie </b></a>
+            <a><b>Application Gestion d'Etudiant </b></a>
         </li>
 
         <li class="pull-right">
@@ -94,7 +94,7 @@
                 </li>
 
                 <li>
-                    <a href="/inscriptionList"><i class="zmdi zmdi-file-text"></i>Gestion des Inscrits</a>
+                    <a href="/listInscription"><i class="zmdi zmdi-file-text"></i>Gestion des Inscrits</a>
                 </li>
             </ul>
         </div>
@@ -117,82 +117,63 @@
 
         <div class="card">
             <div class="card-header bgm-bluegray" align="center" height="300px" width="100">
-                <h2>Interface de Gestions des Consultations</h2>
+                <h2>Interface de Gestions des inscriptions</h2>
 
             </div>
         </div>
-
-
-
     </div >
-    <br/>
+
+
+
+
     <div class="container">
         <div class="card">
             <div class="card-body card-padding">
                 <div class="body">
-                    <form id="form_advanced_valid" method="post" th:action="@{/insertInscrip}" th:object="${insert}" enctype="multipart/form-data" >
-                <div class="row">
-                    <div class="row col-sm-3">
-                        <div class="form-group form-float" >
-                            <div class="form-line" >
-                                <select id="nomEtudiant" data-live-search="true" name="nomEtudiant" class="form-control show-tick" required="required" >
-                                    <option th:each="pat:${listEtudiant}" th:value="${pat.id}" th:text="${pat.nom}" th:selected="${pat.id==1}" >
-                                    </option>
-                                </select>
+                    <form id="form_advanced_valid" method="post" th:action="@{/insertInscrip}" th:object="${insert}" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="row col-sm-3">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <select id="nomEtudiant" data-live-search="true" name="nomEtudiant" class="form-control show-tick" required>
+                                            <option th:each="etudiant : ${listetudiant}" th:value="${etudiant.id}" th:text="${etudiant.nom}" th:selected="${etudiant.id == 1}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-line">
+                                        <select id="coursList" multiple data-live-search="true" name="coursList" class="form-control show-tick" required>
+                                            <option th:each="cours : ${listcours}" th:value="${cours.id}" th:text="${cours.nomC}" th:selected="${cours.id == 1}"></option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-line" >
-                                <select id="coursList" multiple="multiple" data-live-search="true" name="coursList" class="form-control show-tick" required="required"  >
-                                    <option th:each="pat:${listCours}" th:value="${pat.id}" th:text="${pat.nomC}" th:selected="${pat.id==1}" >
-                                    </option>
-                                </select>
-                            </div>
-
+                            <div class="row col-sm-2"></div>
                         </div>
-                    </div>
-                    <div class="row col-sm-2">
-                    </div>
-
-                </div>
-
-                <br/>
-                <div class="row">
-                    <div class="row col-sm-3">
-                        <button type="submit" class="btn btn-primary" >Enregistrer </button>
                         <br/>
-                    </div>
+                        <div class="row">
+                            <div class="row col-sm-3">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <br/>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                </form>
-            </div>
-                <br/>
-                <br/>
-                <div>
-
-                </div>
-                <div  class="table-responsive">
+                <br/><br/>
+                <div class="table-responsive">
                     <table id="data-table-command" class="table table-striped table-vmiddle">
                         <thead>
-                        <tr>
-                            <th data-column-id="id" data-visible="false">ID</th>
-                            <th data-column-id="nom"> nom Etudiant</th>
-                            <th data-column-id="nom"> nom Etudiant</th>
-                            <th data-column-id="nomC"> Cours</th>
-                            <th data-column-id="description"> Description cours</th>
-
-
-<!--                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
-
-                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>
-
-                        </tr>
+                            <tr>
+                                <th data-column-id="id" data-visible="false">ID</th>
+                                <th data-column-id="nom">Nom Etudiant</th>
+                                <th data-column-id="cours">Cours</th>
+                                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="det: ${listInscription}">
-                            <td th:text="${det.id}"></td>
-                            <td th:text="${det.nom}"></td>
-                            <td th:text="${det.prenom}">
-                            <td th:text="${det.coursList}">
-                        </tr>
+                            <tr th:each="inscription : ${listinscription}">
+                                <td th:text="${inscription.id}"></td>
+                                <td th:text="${inscription.nomEtudiant}"></td>
+                                <td th:text="${inscription.coursList}"></td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -200,7 +181,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 
     <div class="card">
         <div class="modal fade" id="confirmEdit" tabindex="-1" role="dialog" aria-hidden="true">
@@ -221,14 +202,14 @@
                                 <div class="row col-sm-3">
                                     <div class="form-group form-float" >
                                         <div class="form-line" >
-                                            <select id="nom_update" data-live-search="true" name="nom_update" class="form-control show-tick" required="required" >
-                                                <option th:each="med:${listEtudiant}" th:value="${med.id}" th:text="${med.nom}" th:selected="${med.id==1}" >
+                                            <select id="nomEtudiant" data-live-search="true" name="nomEtudiant" class="form-control show-tick" required >
+                                                <option th:each="med:${listetudiant}" th:value="${med.id}" th:text="${med.nom}" th:selected="${med.id==1}" >
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="form-line" >
-                                            <select id="nomC_update" data-live-search="true" name="nomC_update" class="form-control show-tick" required="required" >
-                                                <option th:each="pat:${listCours}" th:value="${pat.id}" th:text="${pat.nomC_update}" th:selected="${pat.id==1}" >
+                                            <select id="nomC_update" data-live-search="true" name="nomC_update" class="form-control show-tick" required >
+                                                <option th:each="pat:${listcours}" th:value="${pat.id}" th:text="${pat.nomC}" th:selected="${pat.id==1}" >
                                                 </option>
                                             </select>
                                         </div>
@@ -316,7 +297,7 @@
     $('#sauve').click(function() {
 
             //alert("ok");
-            window.location.href='/insertEtudiant?prenom='+$('#prenom').val() + '&nom='+$('#nom').val();
+            window.location.href='/insertInscrip?prenom='+$('#prenom').val() + '&nom='+$('#nom').val();
 
 
         }
@@ -324,7 +305,7 @@
 
 
     $('#yesEdit').click(function () {
-        window.location.href='/updateEtudiant?prenom='+$('#prenom_update').val() + '&nom='+$('#nom_update').val() + '&id='+$('#coded').val();
+        window.location.href='/updateInscrip?prenom='+$('#prenom_update').val() + '&nom='+$('#nom_update').val() + '&id='+$('#coded').val();
 
 
     });
